@@ -1,0 +1,8 @@
+# Ignore latex and pdf files
+*.aux
+*.log
+*.pdf
+DataTypes
+PointersTypes
+Arrays
+Structures

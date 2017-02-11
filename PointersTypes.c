@@ -1,18 +1,18 @@
 #include <stdio.h>
 int main(int argc, char const *argv[]) {
-  int *ent;
-  char *car;
+  int *integer;
+  char *character;
   float *reals;
   double *reald;
-  short int *ent_corto;
-  long int *ent_largo;
-  long double *real_largo;
-  printf("El tamaño en bytes del entero es: %lu\n", sizeof(ent));
-  printf("El tamaño en bytes del caracter es: %lu\n", sizeof(car));
+  short int *short_int;
+  long int *long_int;
+  long double *long_real;
+  printf("El tamaño en bytes del entero es: %lu\n", sizeof(integer));
+  printf("El tamaño en bytes del caracter es: %lu\n", sizeof(character));
   printf("El tamaño en bytes del float es: %lu\n", sizeof(reals));
   printf("El tamaño en bytes del double es: %lu\n", sizeof(reald));
-  printf("El tamaño en bytes del e_corto es: %lu\n", sizeof(ent_corto));
-  printf("El tamaño en bytes del e_largo es: %lu\n", sizeof(ent_largo));
-  printf("El tamaño en bytes del d_largo es: %lu\n", sizeof(real_largo));
+  printf("El tamaño en bytes del short int es: %lu\n", sizeof(short_int));
+  printf("El tamaño en bytes del long int es: %lu\n", sizeof(long_int));
+  printf("El tamaño en bytes del long double es: %lu\n", sizeof(long_real));
   return 0;
 }
