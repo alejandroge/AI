@@ -13,7 +13,7 @@ int main(int argc, char const *argv[]) {
   insertData(Vector, &Ne);
   printData(Vector, &Ne);
   computeMean(Vector, &Ne, &mean);
-  printf("\n\tThe mean of the data is: %g\n", mean);
+  printf("\n\tLa media de los datos ingresados es: %g\n", mean);
 
   return 0;
 }

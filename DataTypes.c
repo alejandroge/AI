@@ -1,5 +1,6 @@
 #include <stdio.h>
 int main(int argc, char const *argv[]) {
+  // Definición de todos los tipos de datos
   int integer;
   char character;
   float reals;
@@ -7,6 +8,7 @@ int main(int argc, char const *argv[]) {
   short int short_int;
   long int long_int;
   long double long_real;
+  // Imprimir en pantalla todos los tamaños, sizeof()
   printf("El tamaño en bytes del entero es: %lu\n", sizeof(integer));
   printf("El tamaño en bytes del caracter es: %lu\n", sizeof(character));
   printf("El tamaño en bytes del float es: %lu\n", sizeof(reals));

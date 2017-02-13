@@ -25,7 +25,9 @@ int main(int argc, char const *argv[]) {
   pM = allocateMatrix(&N, &M);
   pMT = allocateMatrix(&M, &N);
   insertData(pM, &N, &M);
+  printf("\n");
   printMatrix(pM, &N, &M);
+  printf("\nLa matriz transpuesta es:\n");
   transposeMatrix(pM, pMT, &N, &M);
   printMatrix(pMT, &M, &N);
   deallocateMatrix(pM);
