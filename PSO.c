@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #define NUMBERofPARTICLES 5
 #define NUMBERofPARAMS 2
@@ -15,8 +14,10 @@
 // Swarm structure definition
 typedef struct {
   float * Xi; // Position
-  float * Vi; // velocity
+  float * Vi; // speed
   float * Pi; // best position
+  float XFit; // Position Fitness
+  float PFit; // Best Position Fitness
 }PARTICLE;
 
 typedef struct {
@@ -30,16 +31,15 @@ void InitSwarm(SWARM * pSwrm, const float TLimit, const float FLimit);
 void ShowParticle(SWARM * pSwrm, const unsigned int i);
 void ShowSwarm(SWARM * pSwrm);
 void FreeSwarm(SWARM * pSwrm);
+void EvaluateSwarm(SWARM * pSwrm);
 
 int main(int argc, char const *argv[]) {
   SWARM *ex;
 
   ex = AllocSwarm(NUMBERofPARTICLES, NUMBERofPARAMS);
-
   InitSwarm(ex, TOP_LIMIT, FLOOR_LIMIT);
-
   ShowSwarm(ex);
-
+  EvaluateSwarm(ex);
   FreeSwarm(ex);
 
   return 0;
@@ -125,10 +125,16 @@ void FreeSwarm(SWARM * pSwrm) {
     free(pSwrm->Swrm[k].Vi);
     free(pSwrm->Swrm[k].Pi);
   }
-
   // free memory for all particles
   free(pSwrm->Swrm);
-
   // free memory for swarm
   free(pSwrm);
+}
+
+void EvaluateSwarm(SWARM * pSwrm) {
+  unsigned int k;
+  // Test each particle
+  for(k=0; k<pSwrm->NParticles; k++)
+    pSwrm->Swrm[k].XFit = 50 - ( (pSwrm->Swrm[k].Xi[0]-5) ) * ( (pSwrm->Swrm[k].Xi[0]-5) +
+    (pSwrm->Swrm[k].Xi[1]-5) ) * ( (pSwrm->Swrm[k].Xi[1]-5) );
 }
