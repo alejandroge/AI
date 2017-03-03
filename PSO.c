@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define NUMBERofPARTICLES 5
+#define NUMBERofPARTICLES 20
 #define NUMBERofPARAMS 2
-#define NUMBERofITERATIONS 1
+#define NUMBERofITERATIONS 50
 #define TOP_LIMIT 10.0
 #define FLOOR_LIMIT 0.0
 
@@ -28,11 +28,13 @@ typedef struct {
   unsigned int idGBest;     // index of the best particle
   float C1;
   float C2;
+  float maxSpeed;
+  float minSpeed;
   PARTICLE * Swrm;
 }SWARM;
 
 SWARM *AllocSwarm(const unsigned int NParticles,const unsigned int NParam);
-void InitSwarm(SWARM * pSwrm, const float TLimit, const float FLimit, const float C1, const float C2);
+void InitSwarm(SWARM * pSwrm, const float TLimit, const float FLimit, const float C1, const float C2, const float Ssup, const float Sinf);
 void ShowParticle(SWARM * pSwrm, const unsigned int i);
 void ShowSwarm(SWARM * pSwrm);
 void FreeSwarm(SWARM * pSwrm);
@@ -47,14 +49,14 @@ int main(int argc, char const *argv[]) {
   unsigned int It = 0;
 
   ex = AllocSwarm(NUMBERofPARTICLES, NUMBERofPARAMS);
-  InitSwarm(ex, TOP_LIMIT, FLOOR_LIMIT, 2, 2);
+  InitSwarm(ex, TOP_LIMIT, FLOOR_LIMIT, 2, 2, 1, -1);
   EvaluateSwarm(ex);
   InitBests(ex);
   // Show Swarm and best particle
   ShowSwarm(ex);
   printf("\nBest = %u", ex->idGBest );
 
-  while(It < NUMBERofITERATIONS) {
+  while(It < NUMBERofITERATIONS && 50-ex->Swrm[ex->idGBest].PFit >0.1 ) {
     UpdateSpeed(ex);
     UpdatePosition(ex);
     EvaluateSwarm(ex);
@@ -97,13 +99,20 @@ void UpdatePosition(SWARM *pSwrm){
 void UpdateSpeed(SWARM * pSwrm) {
   unsigned int i,k;
   float Y1, Y2;
+  float aux;
   // For each particle
   for(i=0; i<pSwrm->NParticles; i++)
     for(k=0; k<pSwrm->NParams; k++)
     { // For each param
       Y1 = ((double)rand()/RAND_MAX);
       Y2 = ((double)rand()/RAND_MAX);
-      pSwrm->Swrm[i].Vi[k] += pSwrm->C1*Y1*(pSwrm->Swrm[i].Pi[k]-pSwrm->Swrm[i].Xi[k]) + pSwrm->C2*Y2*(pSwrm->Swrm[pSwrm->idGBest].Pi[k]-pSwrm->Swrm[i].Xi[k]);
+      aux = pSwrm->Swrm[i].Vi[k] + pSwrm->C1*Y1*(pSwrm->Swrm[i].Pi[k]-pSwrm->Swrm[i].Xi[k]) + pSwrm->C2*Y2*(pSwrm->Swrm[pSwrm->idGBest].Pi[k]-pSwrm->Swrm[i].Xi[k]);
+      if(aux > pSwrm->maxSpeed)
+        pSwrm->Swrm[i].Vi[k] = pSwrm->maxSpeed;
+      else if(aux < pSwrm->minSpeed)
+        pSwrm->Swrm[i].Vi[k] = pSwrm->minSpeed;
+      else
+        pSwrm->Swrm[i].Vi[k] = aux;
     }
 }
 
@@ -174,7 +183,7 @@ void ShowParticle(SWARM * pSwrm, const unsigned int i) {
   printf("%2.4f ", pSwrm->Swrm[i].PFit);
 }
 
-void InitSwarm(SWARM * pSwrm, const float TLimit, const float FLimit, const float C1, const float C2) {
+void InitSwarm(SWARM * pSwrm, const float TLimit, const float FLimit, const float C1, const float C2, const float topSpeed, const float lowestSpeed) {
   unsigned int i, k;
   float r;
 
@@ -190,6 +199,8 @@ void InitSwarm(SWARM * pSwrm, const float TLimit, const float FLimit, const floa
   }
   pSwrm->C1 = C1;
   pSwrm->C2 = C2;
+  pSwrm->maxSpeed=topSpeed;
+  pSwrm->minSpeed=lowestSpeed;
 }
 
 
