@@ -2,8 +2,10 @@
 *.aux
 *.log
 *.pdf
+*.bmp
 DataTypes
 PointersTypes
 Arrays
 Structures
 PSO
+BasePDI
