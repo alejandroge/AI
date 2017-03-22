@@ -12,7 +12,7 @@
 #include<stdlib.h>
 #include<math.h>
 /* ***************** ESTRUCTURAS DE DATOS ****************************** */
-typedef unsigned char  		byte;    	// Tipo de dato de 1 byte
+typedef unsigned char  			byte;    	// Tipo de dato de 1 byte
 typedef unsigned short int 	word;    // Tipo de dato de 2 bytes
 typedef unsigned long  int 	dword;   // Tipo de dato de 4 bytes
 
@@ -36,11 +36,11 @@ int main(void)
 { //Declarar un Puntero a imagen
   gcIMG *Img1;
   float i;
-	unsigned int xc, yc, r, index, x, y, j;
+	unsigned int xc, yc, r, index, x, y, j, k;
 
   //Abrir una imagen llamada Uno.bmp
-  Img1=gcGetImgBmp("dos.bmp");
-  //Img1=gcNewImg(256,256);
+  // Img1=gcGetImgBmp("dos.bmp");
+  Img1=gcNewImg(256,256);
   /*
   //Obtiene sus dimensiones
   printf("\n El ancho es: %i",Img1->ancho);
@@ -63,6 +63,10 @@ int main(void)
         Img1->imx[i*Img1->ancho+j]=0;
 				*/
 
+	for(j=0; j<256; j++)
+	for(k=0; k<256; k++)
+		Img1->imx[j*Img1->ancho + k]=255;
+
 	xc = 100;
 	yc = 200;
 	r = 40;
@@ -73,11 +77,11 @@ int main(void)
 		Img1->imx[x*Img1->ancho + y]=0;
 	}
 
-  gcPutImgBmp("Ejemplo.bmp",Img1);
+  gcPutImgBmp("Original.bmp",Img1);
   //Libera la Imagen utilizada
   gcFreeImg(Img1);
   return 0;
-  }
+}
 
 
 /*           FUNCIONES BASE DE PROCESAMIENTO DE IMAGENES          */

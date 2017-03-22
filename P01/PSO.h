@@ -1,3 +1,14 @@
+#define NUMBERofPARTICLES 20
+#define NUMBERofPARAMS 2
+#define NUMBERofITERATIONS 50
+#define TOP_LIMIT 10.0
+#define FLOOR_LIMIT 0.0
+
+/* Example
+  Obtain the maximum for the following equation:
+  f(x,y) = 50 - (x-5)² - (y-5)²
+*/
+
 // Swarm structure definition
 typedef struct {
   float * Xi; // Position
@@ -28,31 +39,6 @@ void InitBests(SWARM *pSwrm);
 void UpdateSpeed(SWARM * pSwrm);
 void UpdatePosition(SWARM *pSwrm);
 void UpdateBests(SWARM *pSwrm);
-
-int main(int argc, char const *argv[]) {
-  SWARM *ex;
-  unsigned int It = 0;
-
-  ex = AllocSwarm(NUMBERofPARTICLES, NUMBERofPARAMS);
-  InitSwarm(ex, TOP_LIMIT, FLOOR_LIMIT, 2, 2, 1, -1);
-  EvaluateSwarm(ex);
-  InitBests(ex);
-  // Show Swarm and best particle
-  ShowSwarm(ex);
-  printf("\nBest = %u", ex->idGBest );
-
-  while(It < NUMBERofITERATIONS && 50-ex->Swrm[ex->idGBest].PFit >0.1 ) {
-    UpdateSpeed(ex);
-    UpdatePosition(ex);
-    EvaluateSwarm(ex);
-    UpdateBests(ex);
-    ShowSwarm(ex);
-    It++;
-    printf("\nBest = %u", ex->idGBest );
-  }
-  FreeSwarm(ex);
-  return 0;
-}
 
 void UpdateBests(SWARM *pSwrm) {
   unsigned int i,k;
