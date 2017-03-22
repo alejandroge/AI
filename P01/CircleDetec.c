@@ -13,16 +13,19 @@
 #define FLOOR_LIMIT 0.0
 
 int main(int argc, char const *argv[]) {
-  SWARM *swrm;
-
-  gcIMG *img;
   float i;
-	unsigned int xc, yc, r, index, x, y, j, k;
+  unsigned int xc, yc, r, index, x, y, j, k;
 
-  //Abrir una imagen llamada Uno.bmp
+  SWARM *swrm;
+  gcIMG *img;
+
+  // Open the image that is going to be used for the circle detection
   img = gcGetImgBmp("dos.bmp");
 
+  // Sets the swarm ready to detection
   swrm = AllocSwarm(NUMBERofPARTICLES, NUMBERofPARAMS);
+
+  // A partir de aquí hay que modificar la fórmula con la que se calcula el fitness
   InitSwarm(swrm, TOP_LIMIT, FLOOR_LIMIT, 2, 2, 1, -1);
   EvaluateSwarm(swrm);
   InitBests(swrm);
@@ -30,6 +33,7 @@ int main(int argc, char const *argv[]) {
   ShowSwarm(swrm);
   printf("\nBest = %u", ex->idGBest );
 
+  // Pero después se va a iterar igual que en el ejemplo, hasta encontrar los circulos
   while(It < NUMBERofITERATIONS && 50-ex->Swrm[ex->idGBest].PFit >0.1 ) {
     UpdateSpeed(ex);
     UpdatePosition(ex);
