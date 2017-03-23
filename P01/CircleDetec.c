@@ -5,6 +5,7 @@
 
 #include "DIP.h"
 #include "PSO.h"
+#include "PV.h"
 
 #define NUMBERofPARTICLES 20
 #define NUMBERofPARAMS 2
@@ -17,10 +18,16 @@ int main(int argc, char const *argv[]) {
   unsigned int xc, yc, r, indswrm, x, y, j, k, It = 0;
 
   SWARM *swrm;
-  gcIMG *img;
+  gcIMG *img, *imgB;
+  VECTOR *PV;
 
   // Open the image that is going to be used for the circle detection
-  img = gcGetImgBmp("dos.bmp");
+  img = gcGetImgBmp("tres.bmp");
+  imgB = gcGetImgBmp("btres.bmp");
+
+  // Allocate and init Pixel Vector
+  PV = AllocVector(imgB);
+  InitVector(PV, imgB);
 
   // Sets the swarm ready to detection
   swrm = AllocSwarm(NUMBERofPARTICLES, NUMBERofPARAMS);
@@ -44,5 +51,6 @@ int main(int argc, char const *argv[]) {
     printf("\nBest = %u", swrm->idGBest );
   }
   FreeSwarm(swrm);
+  printf("\n%u\tx = %u, y = %u", PV->len, PV->data[PV->len-1].x, PV->data[PV->len-1].y);
   return 0;
 }
