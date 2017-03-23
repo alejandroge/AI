@@ -14,7 +14,7 @@
 
 int main(int argc, char const *argv[]) {
   float i;
-  unsigned int xc, yc, r, index, x, y, j, k;
+  unsigned int xc, yc, r, indswrm, x, y, j, k, It = 0;
 
   SWARM *swrm;
   gcIMG *img;
@@ -31,18 +31,18 @@ int main(int argc, char const *argv[]) {
   InitBests(swrm);
   // Show Swarm and best particle
   ShowSwarm(swrm);
-  printf("\nBest = %u", ex->idGBest );
+  printf("\nBest = %u", swrm->idGBest );
 
   // Pero después se va a iterar igual que en el ejemplo, hasta encontrar los circulos
-  while(It < NUMBERofITERATIONS && 50-ex->Swrm[ex->idGBest].PFit >0.1 ) {
-    UpdateSpeed(ex);
-    UpdatePosition(ex);
-    EvaluateSwarm(ex);
-    UpdateBests(ex);
-    ShowSwarm(ex);
+  while(It < NUMBERofITERATIONS && 50-swrm->Swrm[swrm->idGBest].PFit >0.1 ) {
+    UpdateSpeed(swrm);
+    UpdatePosition(swrm);
+    EvaluateSwarm(swrm);
+    UpdateBests(swrm);
+    ShowSwarm(swrm);
     It++;
-    printf("\nBest = %u", ex->idGBest );
+    printf("\nBest = %u", swrm->idGBest );
   }
-  FreeSwarm(ex);
+  FreeSwarm(swrm);
   return 0;
 }
